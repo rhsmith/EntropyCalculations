@@ -1,0 +1,4 @@
+Author: Ryan Hobson Smith
+4/5/2011
+
+This is a collection of functions and utilities that are used to read in raw data from lfm .hdf files, extract magnetic field and pressure information and then use field line tracing to make entropy calculations. Written in c++ in parallel with OpenMP for optimal preformance (based on matlab code that was far too slow to be practical).
