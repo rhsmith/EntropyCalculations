@@ -19,8 +19,33 @@ using namespace std;
 /*
  * Main program entry point
  */
-int main (int argc, char** argv)
+int main (int argc, char* argv[])
 {
-    cout << "Hello World!" << endl;
+    vector<double> xpos,ypos,zpos,bx,by,bz,p;
+    string hdfFileName;
+
+    readPositionData("testData/positions.txt",xpos,ypos,zpos);
+
+    if(argc < 2)
+    {
+        cerr << "Error: input file not specified" << endl;
+        return 1;
+    }
+
+    char* filelistlocation = argv[1];
+
+    ifstream filelist;
+    filelist.open(filelistlocation, ios::in);
+    //Main Loop over all files specified in input file
+    while(getline(filelist,hdfFileName))
+    {
+        cout << hdfFileName << endl;
+        readHDFData(hdfFileName, p, bx, by, bz);
+        cout << "Read in data from " << hdfFileName << endl;
+        
+    }
+
+
+
     return 0;
 }

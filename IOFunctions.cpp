@@ -32,6 +32,9 @@ bool readHDFData(string filename,vector<double> &P, vector<double> &Bx, vector<d
 bool readPositionData(string filename, vector<double> &x, vector<double> &y, vector<double> &z)
 {
     int numlines = lineCount(filename); //little wasteful since file is opened and closed twice... but can fix that later
+    x.resize(numlines);
+    y.resize(numlines);
+    z.resize(numlines);
     ifstream positionsFile;
     positionsFile.open(filename.c_str(),ios::in);
     //Don't need to error check because lineCount already does this
