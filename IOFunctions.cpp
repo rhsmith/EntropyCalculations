@@ -75,9 +75,19 @@ int lineCount(string filename)
 }
 
 
-bool writeDataOut(string filename)
+bool writeDataOut(string filename, TNT::Array2D<double> data)
 {
     cout << "writing data out to " << filename << endl;
-    cout << "NOTE FUNCTION NOT IMPLEMENTED YET!" << endl;
+    ofstream outputfile;
+    outputfile.open(filename.c_str(),ios::out);
+    for(int i= 0; i < data.dim1(); i++)
+    {
+        for(int j = 0; j < data.dim2(); j++)
+        {
+            outputfile << data[i][j] << " ";
+        }
+        outputfile << endl;
+    }
+    
     return false;
 }

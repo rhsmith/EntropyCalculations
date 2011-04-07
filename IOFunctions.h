@@ -9,6 +9,8 @@
 #include <vector>
 #include <fstream>
 
+#include "tnt/tnt_array2d.h"
+
 #ifndef IOFUNCTIONS_H
 #define	IOFUNCTIONS_H
 
@@ -31,7 +33,7 @@ int lineCount(std::string filename);
 /*
  * This function writes out entropy data into the filename specified
  */
-bool writeDataOut(std::string filename);
+bool writeDataOut(std::string filename, TNT::Array2D<double> data);
 
 
 #endif	/* IOFUNCTIONS_H */

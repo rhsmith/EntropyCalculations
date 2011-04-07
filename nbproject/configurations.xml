@@ -45,6 +45,9 @@
         <platform>2</platform>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <commandLine>-fopenmp</commandLine>
+        </ccTool>
       </compileType>
       <folder path="TestFiles/f1">
         <cTool>
@@ -74,6 +77,8 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <commandLine>-fopenmp</commandLine>
+          <warningLevel>0</warningLevel>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

@@ -48,8 +48,8 @@ TESTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-fopenmp
+CXXFLAGS=-fopenmp
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -71,17 +71,17 @@ dist/Release/GNU-Linux-x86/entropycalculations: ${OBJECTFILES}
 ${OBJECTDIR}/InterpretationFunctions.o: InterpretationFunctions.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/InterpretationFunctions.o InterpretationFunctions.cpp
+	$(COMPILE.cc) -O2 -w -MMD -MP -MF $@.d -o ${OBJECTDIR}/InterpretationFunctions.o InterpretationFunctions.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -w -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/IOFunctions.o: IOFunctions.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp
+	$(COMPILE.cc) -O2 -w -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp
 
 # Subprojects
 .build-subprojects:
@@ -96,7 +96,7 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/IOTests.o ${OBJECTFILES:%.o=%_nomain.o
 ${TESTDIR}/tests/IOTests.o: tests/IOTests.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/IOTests.o tests/IOTests.cpp
+	$(COMPILE.cc) -O2 -w -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/IOTests.o tests/IOTests.cpp
 
 
 ${OBJECTDIR}/InterpretationFunctions_nomain.o: ${OBJECTDIR}/InterpretationFunctions.o InterpretationFunctions.cpp 
@@ -107,7 +107,7 @@ ${OBJECTDIR}/InterpretationFunctions_nomain.o: ${OBJECTDIR}/InterpretationFuncti
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/InterpretationFunctions_nomain.o InterpretationFunctions.cpp;\
+	    $(COMPILE.cc) -O2 -w -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/InterpretationFunctions_nomain.o InterpretationFunctions.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/InterpretationFunctions.o ${OBJECTDIR}/InterpretationFunctions_nomain.o;\
 	fi
@@ -120,7 +120,7 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/main_nomain.o main.cpp;\
+	    $(COMPILE.cc) -O2 -w -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/main_nomain.o main.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
 	fi
@@ -133,7 +133,7 @@ ${OBJECTDIR}/IOFunctions_nomain.o: ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions_nomain.o IOFunctions.cpp;\
+	    $(COMPILE.cc) -O2 -w -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions_nomain.o IOFunctions.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/IOFunctions.o ${OBJECTDIR}/IOFunctions_nomain.o;\
 	fi
