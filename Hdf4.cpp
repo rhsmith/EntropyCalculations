@@ -514,4 +514,3 @@ void Hdf4::writeVariable(const string &variable, const floatArray &data, const s
 }
 #endif
 // defined(APLUSPLUS) || defined(PPLUSPLUS)
-

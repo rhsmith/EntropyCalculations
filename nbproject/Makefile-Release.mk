@@ -35,7 +35,9 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/InterpretationFunctions.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/IOFunctions.o
+	${OBJECTDIR}/HDFReader.o \
+	${OBJECTDIR}/IOFunctions.o \
+	${OBJECTDIR}/Hdf4.o
 
 # Test Directory
 TESTDIR=build/${CND_CONF}/${CND_PLATFORM}/tests
@@ -78,10 +80,20 @@ ${OBJECTDIR}/main.o: main.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -w -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
+${OBJECTDIR}/HDFReader.o: HDFReader.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -w -MMD -MP -MF $@.d -o ${OBJECTDIR}/HDFReader.o HDFReader.cpp
+
 ${OBJECTDIR}/IOFunctions.o: IOFunctions.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -w -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp
+
+${OBJECTDIR}/Hdf4.o: Hdf4.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -w -MMD -MP -MF $@.d -o ${OBJECTDIR}/Hdf4.o Hdf4.cpp
 
 # Subprojects
 .build-subprojects:
@@ -96,7 +108,7 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/IOTests.o ${OBJECTFILES:%.o=%_nomain.o
 ${TESTDIR}/tests/IOTests.o: tests/IOTests.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -w -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/IOTests.o tests/IOTests.cpp
+	$(COMPILE.cc) -O2 -w -I. -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/IOTests.o tests/IOTests.cpp
 
 
 ${OBJECTDIR}/InterpretationFunctions_nomain.o: ${OBJECTDIR}/InterpretationFunctions.o InterpretationFunctions.cpp 
@@ -125,6 +137,19 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp
 	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
 	fi
 
+${OBJECTDIR}/HDFReader_nomain.o: ${OBJECTDIR}/HDFReader.o HDFReader.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/HDFReader.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -w -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/HDFReader_nomain.o HDFReader.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/HDFReader.o ${OBJECTDIR}/HDFReader_nomain.o;\
+	fi
+
 ${OBJECTDIR}/IOFunctions_nomain.o: ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/IOFunctions.o`; \
@@ -136,6 +161,19 @@ ${OBJECTDIR}/IOFunctions_nomain.o: ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp
 	    $(COMPILE.cc) -O2 -w -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions_nomain.o IOFunctions.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/IOFunctions.o ${OBJECTDIR}/IOFunctions_nomain.o;\
+	fi
+
+${OBJECTDIR}/Hdf4_nomain.o: ${OBJECTDIR}/Hdf4.o Hdf4.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/Hdf4.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -w -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Hdf4_nomain.o Hdf4.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/Hdf4.o ${OBJECTDIR}/Hdf4_nomain.o;\
 	fi
 
 # Run Test Targets

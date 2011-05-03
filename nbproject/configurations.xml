@@ -5,8 +5,11 @@
                    displayName="Header Files"
                    projectFiles="true"
                    kind="SOURCE_LOGICAL_FOLDER">
+      <itemPath>HDFReader.h</itemPath>
+      <itemPath>Hdf4.h</itemPath>
       <itemPath>IOFunctions.h</itemPath>
       <itemPath>InterpretationFunctions.h</itemPath>
+      <itemPath>Io.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -17,6 +20,8 @@
                    displayName="Source Files"
                    projectFiles="true"
                    kind="SOURCE_LOGICAL_FOLDER">
+      <itemPath>HDFReader.cpp</itemPath>
+      <itemPath>Hdf4.cpp</itemPath>
       <itemPath>IOFunctions.cpp</itemPath>
       <itemPath>InterpretationFunctions.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -45,18 +50,34 @@
         <platform>2</platform>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/hdf</pElem>
+          </incDir>
+        </cTool>
         <ccTool>
+          <incDir>
+            <pElem>/usr/include/hdf</pElem>
+          </incDir>
           <commandLine>-fopenmp</commandLine>
         </ccTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/include/hdf</pElem>
+          </linkerAddLib>
+          <commandLine>-lmfhdf -ldf -ljpeg -lz</commandLine>
+        </linkerTool>
       </compileType>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
             <pElem>.</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
         <ccTool>
           <incDir>
+            <pElem>.</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>
@@ -91,10 +112,12 @@
         <cTool>
           <incDir>
             <pElem>.</pElem>
+            <pElem>.</pElem>
           </incDir>
         </cTool>
         <ccTool>
           <incDir>
+            <pElem>.</pElem>
             <pElem>.</pElem>
           </incDir>
         </ccTool>

@@ -35,7 +35,9 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/InterpretationFunctions.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/IOFunctions.o
+	${OBJECTDIR}/HDFReader.o \
+	${OBJECTDIR}/IOFunctions.o \
+	${OBJECTDIR}/Hdf4.o
 
 # Test Directory
 TESTDIR=build/${CND_CONF}/${CND_PLATFORM}/tests
@@ -58,7 +60,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L/usr/include/hdf
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -66,22 +68,32 @@ LDLIBSOPTIONS=
 
 dist/Debug/GNU-Linux-x86/entropycalculations: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/GNU-Linux-x86
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/entropycalculations ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -lmfhdf -ldf -ljpeg -lz -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/entropycalculations ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/InterpretationFunctions.o: InterpretationFunctions.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/InterpretationFunctions.o InterpretationFunctions.cpp
+	$(COMPILE.cc) -g -I/usr/include/hdf -MMD -MP -MF $@.d -o ${OBJECTDIR}/InterpretationFunctions.o InterpretationFunctions.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I/usr/include/hdf -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/HDFReader.o: HDFReader.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I/usr/include/hdf -MMD -MP -MF $@.d -o ${OBJECTDIR}/HDFReader.o HDFReader.cpp
 
 ${OBJECTDIR}/IOFunctions.o: IOFunctions.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp
+	$(COMPILE.cc) -g -I/usr/include/hdf -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp
+
+${OBJECTDIR}/Hdf4.o: Hdf4.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I/usr/include/hdf -MMD -MP -MF $@.d -o ${OBJECTDIR}/Hdf4.o Hdf4.cpp
 
 # Subprojects
 .build-subprojects:
@@ -96,7 +108,7 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/IOTests.o ${OBJECTFILES:%.o=%_nomain.o
 ${TESTDIR}/tests/IOTests.o: tests/IOTests.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/IOTests.o tests/IOTests.cpp
+	$(COMPILE.cc) -g -I. -I. -I/usr/include/hdf -MMD -MP -MF $@.d -o ${TESTDIR}/tests/IOTests.o tests/IOTests.cpp
 
 
 ${OBJECTDIR}/InterpretationFunctions_nomain.o: ${OBJECTDIR}/InterpretationFunctions.o InterpretationFunctions.cpp 
@@ -107,7 +119,7 @@ ${OBJECTDIR}/InterpretationFunctions_nomain.o: ${OBJECTDIR}/InterpretationFuncti
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/InterpretationFunctions_nomain.o InterpretationFunctions.cpp;\
+	    $(COMPILE.cc) -g -I/usr/include/hdf -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/InterpretationFunctions_nomain.o InterpretationFunctions.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/InterpretationFunctions.o ${OBJECTDIR}/InterpretationFunctions_nomain.o;\
 	fi
@@ -120,9 +132,22 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/main_nomain.o main.cpp;\
+	    $(COMPILE.cc) -g -I/usr/include/hdf -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/main_nomain.o main.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
+	fi
+
+${OBJECTDIR}/HDFReader_nomain.o: ${OBJECTDIR}/HDFReader.o HDFReader.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/HDFReader.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -I/usr/include/hdf -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/HDFReader_nomain.o HDFReader.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/HDFReader.o ${OBJECTDIR}/HDFReader_nomain.o;\
 	fi
 
 ${OBJECTDIR}/IOFunctions_nomain.o: ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp 
@@ -133,9 +158,22 @@ ${OBJECTDIR}/IOFunctions_nomain.o: ${OBJECTDIR}/IOFunctions.o IOFunctions.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions_nomain.o IOFunctions.cpp;\
+	    $(COMPILE.cc) -g -I/usr/include/hdf -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/IOFunctions_nomain.o IOFunctions.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/IOFunctions.o ${OBJECTDIR}/IOFunctions_nomain.o;\
+	fi
+
+${OBJECTDIR}/Hdf4_nomain.o: ${OBJECTDIR}/Hdf4.o Hdf4.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/Hdf4.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -I/usr/include/hdf -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Hdf4_nomain.o Hdf4.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/Hdf4.o ${OBJECTDIR}/Hdf4_nomain.o;\
 	fi
 
 # Run Test Targets
