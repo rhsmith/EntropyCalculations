@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include "InterpretationFunctions.h"
 #include "IOFunctions.h"
 
@@ -34,6 +35,7 @@ int main (int argc, char* argv[])
     string hdfFileName;
     //string baseoutpath = "/thayerfs/research/lfm/rsmith/data/entropy/";
     string baseoutpath = "testData/testOutput/";
+
 
     //Make sure input file was specified
     if(argc < 2)
